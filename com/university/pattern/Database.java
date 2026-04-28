@@ -2,6 +2,9 @@ package com.university.pattern;
 
 import com.university.model.academic.Course;
 import com.university.model.academic.CourseRegistration;
+import com.university.model.academic.News;
+import com.university.model.research.ResearchPaper;
+import com.university.model.research.Researcher;
 import com.university.model.user.Student;
 import com.university.model.user.User;
 
@@ -15,6 +18,8 @@ public class Database {
     private Map<String, User> users = new LinkedHashMap<>();
     private Map<String, Course> courses = new LinkedHashMap<>();
     private List<CourseRegistration> registrations = new ArrayList<>();
+    private List<ResearchPaper> papers = new ArrayList<>();
+    private List<News> newsList = new ArrayList<>();
     private List<String> actionLog = new ArrayList<>();
 
     private static final String SAVE_PATH = "university_data.ser";
@@ -39,10 +44,33 @@ public class Database {
                 .map(u -> (Student) u)
                 .collect(Collectors.toList());
     }
+    public List<Researcher> getAllResearchers() {
+        return users.values().stream()
+                .filter(u -> u instanceof Researcher)
+                .map(u -> (Researcher) u)
+                .collect(Collectors.toList());
+    }
 
     public void saveCourse(Course course) { courses.put(course.getCourseId(), course); }
     public Optional<Course> findCourseById(String id) { return Optional.ofNullable(courses.get(id)); }
     public List<Course> getAllCourses() { return new ArrayList<>(courses.values()); }
+
+    public void saveRegistration(CourseRegistration reg) { registrations.add(reg); }
+    public List<CourseRegistration> getAllRegistrations() { return registrations; }
+    public List<CourseRegistration> getPendingRegistrations() {
+        return registrations.stream()
+                .filter(r -> r.getStatus() == com.university.enums.RegistrationStatus.PENDING)
+                .collect(Collectors.toList());
+    }
+
+    public void savePaper(ResearchPaper paper) { papers.add(paper); }
+    public List<ResearchPaper> getAllPapers() { return papers; }
+    public List<ResearchPaper> getAllPapersSorted(Comparator<ResearchPaper> c) {
+        return papers.stream().sorted(c).collect(Collectors.toList());
+    }
+
+    public void saveNews(News news) { newsList.add(news); }
+    public List<News> getAllNews() { return newsList; }
 
     public void addLog(String entry) {
         String stamped = "[" + java.time.LocalDateTime.now() + "] " + entry;
@@ -57,6 +85,7 @@ public class Database {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f))) {
             users = (Map<String, User>) ois.readObject();
             courses = (Map<String, Course>) ois.readObject();
+            registrations = (List<CourseRegistration>) ois.readObject();
             System.out.println("[DB] Data loaded: " + users.size() + " users, " + courses.size() + " courses.");
         } catch (Exception e) {
             System.out.println("[DB] Load failed: " + e.getMessage());
@@ -67,6 +96,7 @@ public class Database {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(SAVE_PATH))) {
             oos.writeObject(users);
             oos.writeObject(courses);
+            oos.writeObject(registrations);
             System.out.println("[DB] Data saved successfully.");
         } catch (IOException e) {
             System.out.println("[DB] Save failed: " + e.getMessage());
