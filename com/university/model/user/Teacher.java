@@ -19,6 +19,24 @@ public abstract class Teacher extends Employee {
         this.ratings = new ArrayList<>();
     }
 
+    public void putMark(Student student, Course course, double att1, double att2, double finalExam) {
+        Mark mark = new Mark(course, student);
+        mark.setAttestation1(att1);
+        mark.setAttestation2(att2);
+        mark.setFinalExam(finalExam);
+        student.getTranscript().addMark(mark);
+        student.updateGPA();
+        System.out.printf("[MARK] %s → %s: %.1f/%.1f/%.1f = %.1f (%s)%n",
+                getFullName(), student.getFullName(), att1, att2, finalExam,
+                mark.getTotal(), mark.getLetterGrade());
+    }
+
+    public void viewStudents(Course course) {
+        System.out.println("=== Students in " + course.getCourseName() + " ===");
+        course.getEnrolledStudents().forEach(s ->
+                System.out.printf("  %s | GPA: %.2f%n", s.getFullName(), s.getGpa()));
+    }
+
     public void viewCourses() {
         System.out.println("=== My Courses ===");
         courses.forEach(c -> System.out.println("  " + c.getCourseName() + " (" + c.getCredits() + " cr)"));

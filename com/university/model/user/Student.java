@@ -4,6 +4,9 @@ import com.university.enums.*;
 import com.university.exception.CreditLimitException;
 import com.university.exception.FailLimitException;
 import com.university.model.academic.*;
+import com.university.model.research.ResearchPaper;
+import com.university.model.research.ResearchProject;
+import com.university.model.research.Researcher;
 import java.util.*;
 
 public class Student extends User implements Comparable<Student> {
@@ -13,10 +16,17 @@ public class Student extends User implements Comparable<Student> {
     private double gpa;
     private int credits;
     private int failCount;
+    private Transcript transcript;
     private List<CourseRegistration> registrations;
+    private Researcher supervisor;
     private ScholarshipStatus scholarshipStatus;
     private RiskLevel riskLevel;
     private List<String> notifications;
+
+    private boolean isResearcher;
+    private int hIndex;
+    private List<ResearchPaper> researchPapers;
+    private List<ResearchProject> researchProjects;
 
     private static final int MAX_CREDITS = 21;
     private static final int MAX_FAILS = 3;
@@ -30,11 +40,16 @@ public class Student extends User implements Comparable<Student> {
         this.gpa = 0.0;
         this.credits = 0;
         this.failCount = 0;
+        this.transcript = new Transcript(this);
         this.registrations = new ArrayList<>();
         this.scholarshipStatus = ScholarshipStatus.NOT_ASSIGNED;
         this.riskLevel = RiskLevel.LOW;
         this.notifications = new ArrayList<>();
-                   }
+        this.isResearcher = false;
+        this.hIndex = 0;
+        this.researchPapers = new ArrayList<>();
+        this.researchProjects = new ArrayList<>();
+    }
 
     public CourseRegistration registerForCourse(Course course)
             throws CreditLimitException, FailLimitException {
@@ -47,6 +62,19 @@ public class Student extends User implements Comparable<Student> {
         registrations.add(reg);
         System.out.println("[REGISTRATION] " + getFullName() + " applied for: " + course.getCourseName());
         return reg;
+    }
+
+    public void updateGPA() {
+        List<Mark> marks = transcript.getAllMarks();
+        if (marks.isEmpty()) { this.gpa = 0.0; return; }
+        double total = marks.stream().mapToDouble(Mark::getTotal).sum();
+        this.gpa = total / marks.size() / 25.0;
+        this.gpa = Math.min(4.0, Math.round(gpa * 100.0) / 100.0);
+
+        long fails = marks.stream().filter(Mark::isFail).count();
+        this.failCount = (int) fails;
+        updateRiskLevel();
+        updateScholarshipStatus();
     }
 
     private void updateRiskLevel() {
@@ -72,9 +100,42 @@ public class Student extends User implements Comparable<Student> {
                 teacher.getFullName() + ": " + score + "/5");
     }
 
+    public void setSupervisor(Researcher supervisor) throws com.university.exception.LowHIndexException {
+        if (supervisor.getHIndex() < 3)
+            throw new com.university.exception.LowHIndexException(supervisor.getHIndex());
+        if (yearOfStudy != 4)
+            System.out.println("Warning: supervisor is typically assigned to 4th year students.");
+        this.supervisor = supervisor;
+        System.out.println("[SUPERVISOR] " + getFullName() + " assigned supervisor with h-index="
+                + supervisor.getHIndex());
+    }
+
+    public void setSupervisorDirect(Researcher supervisor) { this.supervisor = supervisor; }
+
+    public void viewMarks() {
+        System.out.println("=== Marks for " + getFullName() + " ===");
+        transcript.getAllMarks().forEach(m ->
+                System.out.printf("  %s: %.0f/%.0f/%.0f → %.1f (%s)%n",
+                        m.getCourse().getCourseName(),
+                        m.getAttestation1(), m.getAttestation2(), m.getFinalExam(),
+                        m.getTotal(), m.getLetterGrade()));
+    }
+
+    public void printTranscript() { System.out.println(transcript.formatTranscript()); }
+
     public void notify(String message) {
         notifications.add(message);
         System.out.println("[NOTIFICATION → " + getFullName() + "] " + message);
+    }
+
+    public void enableResearcher(int hIndex) {
+        this.isResearcher = true;
+        this.hIndex = hIndex;
+    }
+
+    public void addResearchPaper(ResearchPaper paper) {
+        if (!isResearcher) { System.out.println("Student is not a researcher."); return; }
+        researchPapers.add(paper);
     }
 
     public String getFullName()               { return firstName + " " + lastName; }
@@ -84,8 +145,16 @@ public class Student extends User implements Comparable<Student> {
     public double getGpa()                    { return gpa; }
     public int getCredits()                   { return credits; }
     public int getFailCount()                 { return failCount; }
+    public Transcript getTranscript()         { return transcript; }
+    public List<CourseRegistration> getRegistrations() { return registrations; }
+    public Researcher getSupervisor()         { return supervisor; }
     public ScholarshipStatus getScholarshipStatus() { return scholarshipStatus; }
-   
+    public RiskLevel getRiskLevel()           { return riskLevel; }
+    public boolean isResearcher()             { return isResearcher; }
+    public int getHIndex()                    { return hIndex; }
+    public List<ResearchPaper> getResearchPapers() { return researchPapers; }
+    public List<ResearchProject> getResearchProjects() { return researchProjects; }
+
     @Override
     public int compareTo(Student other) {
         return Double.compare(other.gpa, this.gpa);
@@ -105,12 +174,12 @@ public class Student extends User implements Comparable<Student> {
     @Override
     public String toString() {
         return String.format("Student[%s | year=%d | GPA=%.2f | fails=%d | risk=%s]",
-                getFullName(), yearOfStudy, gpa, failCount);
+                getFullName(), yearOfStudy, gpa, failCount, riskLevel);
     }
 
     @Override
     public String getInfo() {
         return String.format("Student: %s | Year: %d | GPA: %.2f | Scholarship: %s | Risk: %s",
-                getFullName(), yearOfStudy, gpa, scholarshipStatus);
+                getFullName(), yearOfStudy, gpa, scholarshipStatus, riskLevel);
     }
 }

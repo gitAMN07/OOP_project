@@ -66,13 +66,6 @@ public class Manager extends Employee {
                 .limit(3).forEach(s -> System.out.printf("  %s — GPA: %.2f%n", s.getFullName(), s.getGpa()));
     }
 
-    public void publishNews(String title, String body) {
-        News news = new News(title, body, this);
-        Database.getInstance().saveNews(news);
-        com.university.pattern.NewsPublisher.getInstance().publish(news);
-        System.out.println("[MANAGER] News published: " + title);
-    }
-
     public ManagerType getManagerType() { return managerType; }
 
     @Override
