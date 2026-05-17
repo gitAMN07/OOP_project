@@ -1,6 +1,7 @@
 package com.university.model.academic;
 
 import com.university.model.user.Employee;
+import com.university.model.user.Manager;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
