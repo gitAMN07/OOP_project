@@ -113,15 +113,56 @@ public class Student extends User implements Comparable<Student> {
     public void setSupervisorDirect(Researcher supervisor) { this.supervisor = supervisor; }
 
     public void viewMarks() {
-        System.out.println("=== Marks for " + getFullName() + " ===");
-        transcript.getAllMarks().forEach(m ->
-                System.out.printf("  %s: %.0f/%.0f/%.0f → %.1f (%s)%n",
-                        m.getCourse().getCourseName(),
-                        m.getAttestation1(), m.getAttestation2(), m.getFinalExam(),
-                        m.getTotal(), m.getLetterGrade()));
+    System.out.println("╔══════════════════════════════════════════════════════╗");
+    System.out.printf( "║  Marks for: %-40s║%n", getFullName());
+    System.out.println("╠══════════════════╦═════╦═════╦═══════╦═══════╦══════╣");
+    System.out.println("║ Course           ║ AT1 ║ AT2 ║ Final ║ Total ║Grade ║");
+    System.out.println("╠══════════════════╬═════╬═════╬═══════╬═══════╬══════╣");
+    if (transcript.getAllMarks().isEmpty()) {
+        System.out.println("║              No marks recorded yet.                  ║");
+    } else {
+        transcript.getAllMarks().forEach(m -> System.out.printf(
+            "║ %-16s ║ %3.0f ║ %3.0f ║  %3.0f  ║ %5.1f ║  %-3s ║%n",
+            m.getCourse().getCourseName().length() > 16
+                ? m.getCourse().getCourseName().substring(0, 16)
+                : m.getCourse().getCourseName(),
+            m.getAttestation1(), m.getAttestation2(),
+            m.getFinalExam(), m.getTotal(), m.getLetterGrade()));
     }
+    System.out.println("╚══════════════════╩═════╩═════╩═══════╩═══════╩══════╝");
+    System.out.printf("  Overall GPA: %.2f | Fails: %d/%d%n", gpa, failCount, MAX_CREDITS);
+}
 
     public void printTranscript() { System.out.println(transcript.formatTranscript()); }
+
+    public void printAcademicStatus() {
+    String riskIcon = switch (riskLevel) {
+        case CRITICAL -> "⛔ CRITICAL";
+        case HIGH     -> "🔴 HIGH";
+        case MEDIUM   -> "🟡 MEDIUM";
+        case LOW      -> "🟢 LOW";
+    };
+    String scholarIcon = switch (scholarshipStatus) {
+        case ACTIVE      -> "✅ ACTIVE";
+        case SUSPENDED   -> "⚠️  SUSPENDED";
+        case REVOKED     -> "❌ REVOKED";
+        case NOT_ASSIGNED -> "— NOT ASSIGNED";
+    };
+    System.out.println("╔══════════════════════════════════════╗");
+    System.out.println("║        ACADEMIC STATUS REPORT        ║");
+    System.out.println("╠══════════════════════════════════════╣");
+    System.out.printf( "║  Student    : %-23s║%n", getFullName());
+    System.out.printf( "║  Year       : %-23d║%n", yearOfStudy);
+    System.out.printf( "║  GPA        : %-23.2f║%n", gpa);
+    System.out.printf( "║  Credits    : %d/21%-20s║%n", credits, "");
+    System.out.printf( "║  Fails      : %d/3 %-20s║%n", failCount, "");
+    System.out.printf( "║  Risk Level : %-23s║%n", riskIcon);
+    System.out.printf( "║  Scholarship: %-23s║%n", scholarIcon);
+    System.out.println("╚══════════════════════════════════════╝");
+    if (riskLevel == RiskLevel.CRITICAL || riskLevel == RiskLevel.HIGH) {
+        System.out.println("⚠️  WARNING: Student at risk of academic dismissal");
+    }
+}
 
     public void notify(String message) {
         notifications.add(message);

@@ -55,16 +55,30 @@ public class Manager extends Employee {
     public void printAcademicReport() {
         List<Student> students = Database.getInstance().getAllStudents();
         if (students.isEmpty()) { System.out.println("No students in system."); return; }
-        double avgGpa = students.stream().mapToDouble(Student::getGpa).average().orElse(0);
-        long atRisk = students.stream().filter(s -> s.getGpa() < 2.0).count();
-        System.out.println("=== ACADEMIC REPORT ===");
-        System.out.printf("Total students: %d%n", students.size());
-        System.out.printf("Average GPA: %.2f%n", avgGpa);
-        System.out.printf("Students at risk (GPA < 2.0): %d%n", atRisk);
-        System.out.println("Top 3 by GPA:");
-        students.stream().sorted(Comparator.comparingDouble(Student::getGpa).reversed())
-                .limit(3).forEach(s -> System.out.printf("  %s — GPA: %.2f%n", s.getFullName(), s.getGpa()));
-    }
+
+        double avgGpa  = students.stream().mapToDouble(Student::getGpa).average().orElse(0);
+        long critical  = students.stream().filter(s -> s.getRiskLevel() == com.university.enums.RiskLevel.CRITICAL).count();
+        long high      = students.stream().filter(s -> s.getRiskLevel() == com.university.enums.RiskLevel.HIGH).count();
+        long atRisk    = critical + high;
+
+        System.out.println("╔══════════════════════════════════════════╗");
+        System.out.println("║           ACADEMIC REPORT                ║");
+        System.out.println("╠══════════════════════════════════════════╣");
+        System.out.printf( "║  Total students : %-22d║%n", students.size());
+        System.out.printf( "║  Average GPA    : %-22.2f║%n", avgGpa);
+        System.out.printf( "║  At risk        : %-22d║%n", atRisk);
+        System.out.printf( "║  Critical risk  : %-22d║%n", critical);
+        System.out.println("╠══════════════════════════════════════════╣");
+        System.out.println("║  TOP STUDENTS BY GPA                     ║");
+        System.out.println("╠══════════════════════════════════════════╣");
+        students.stream()
+            .sorted(Comparator.comparingDouble(Student::getGpa).reversed())
+            .limit(5)
+         .forEach(s -> System.out.printf("║  %-20s GPA: %.2f   %-4s║%n",
+            s.getFullName(), s.getGpa(),
+            s.getRiskLevel() == com.university.enums.RiskLevel.LOW ? "✓" : "⚠"));
+        System.out.println("╚══════════════════════════════════════════╝");
+        }
 
     public void publishNews(String title, String body) {
         News news = new News(title, body, this);
