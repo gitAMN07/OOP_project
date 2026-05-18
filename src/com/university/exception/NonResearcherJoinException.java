@@ -1,4 +1,4 @@
-package src.com.university.exception;
+package com.university.exception;
 
 public class NonResearcherJoinException extends Exception {
     public NonResearcherJoinException(String userName) {

@@ -1,10 +1,10 @@
-package src.com.university.model.user;
+package com.university.model.user;
 
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
-import src.com.university.enums.Role;
+import com.university.enums.Role;
 
 public abstract class User implements Serializable {
     private final String userId;

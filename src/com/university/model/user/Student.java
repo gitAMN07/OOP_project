@@ -1,14 +1,14 @@
-package src.com.university.model.user;
+package com.university.model.user;
 
 import java.util.*;
 
-import src.com.university.enums.*;
-import src.com.university.exception.CreditLimitException;
-import src.com.university.exception.FailLimitException;
-import src.com.university.model.academic.*;
-import src.com.university.model.research.ResearchPaper;
-import src.com.university.model.research.ResearchProject;
-import src.com.university.model.research.Researcher;
+import com.university.enums.*;
+import com.university.exception.CreditLimitException;
+import com.university.exception.FailLimitException;
+import com.university.model.academic.*;
+import com.university.model.research.ResearchPaper;
+import com.university.model.research.ResearchProject;
+import com.university.model.research.Researcher;
 
 public class Student extends User implements Comparable<Student> {
     private String firstName;
@@ -101,9 +101,9 @@ public class Student extends User implements Comparable<Student> {
                 teacher.getFullName() + ": " + score + "/5");
     }
 
-    public void setSupervisor(Researcher supervisor) throws src.com.university.exception.LowHIndexException {
+    public void setSupervisor(Researcher supervisor) throws com.university.exception.LowHIndexException {
         if (supervisor.getHIndex() < 3)
-            throw new src.com.university.exception.LowHIndexException(supervisor.getHIndex());
+            throw new com.university.exception.LowHIndexException(supervisor.getHIndex());
         if (yearOfStudy != 4)
             System.out.println("Warning: supervisor is typically assigned to 4th year students.");
         this.supervisor = supervisor;

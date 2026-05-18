@@ -1,11 +1,11 @@
-package src.com.university.feature;
+package com.university.feature;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-import src.com.university.model.research.ResearchPaper;
-import src.com.university.model.research.Researcher;
-import src.com.university.pattern.Database;
+import com.university.model.research.ResearchPaper;
+import com.university.model.research.Researcher;
+import com.university.pattern.Database;
 
 public class CitationGraph {
     private Map<ResearchPaper, List<ResearchPaper>> edges = new LinkedHashMap<>();

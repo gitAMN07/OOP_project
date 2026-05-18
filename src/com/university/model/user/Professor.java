@@ -1,13 +1,14 @@
 package com.university.model.user;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
 import com.university.enums.TeacherTitle;
 import com.university.exception.LowHIndexException;
 import com.university.model.research.ResearchPaper;
 import com.university.model.research.ResearchProject;
 import com.university.model.research.Researcher;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
 
 public class Professor extends Teacher implements Researcher {
     private int hIndex;

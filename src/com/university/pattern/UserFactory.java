@@ -1,8 +1,8 @@
-package src.com.university.pattern;
+package com.university.pattern;
 
-import src.com.university.enums.ManagerType;
-import src.com.university.enums.Role;
-import src.com.university.model.user.*;
+import com.university.enums.ManagerType;
+import com.university.enums.Role;
+import com.university.model.user.*;
 
 public class UserFactory {
     public static User create(Role role, String login, String password,

@@ -1,8 +1,8 @@
-package src.com.university.comparator;
+package com.university.comparator;
 
 import java.util.Comparator;
 
-import src.com.university.model.research.ResearchPaper;
+import com.university.model.research.ResearchPaper;
 
 public class PaperByDateComparator implements Comparator<ResearchPaper> {
     @Override

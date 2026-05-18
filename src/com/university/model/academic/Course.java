@@ -1,9 +1,9 @@
-package src.com.university.model.academic;
+package com.university.model.academic;
 
 import java.util.*;
 
-import src.com.university.model.user.Student;
-import src.com.university.model.user.Teacher;
+import com.university.model.user.Student;
+import com.university.model.user.Teacher;
 
 public class Course implements java.io.Serializable {
     private final String courseId;

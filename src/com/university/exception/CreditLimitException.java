@@ -1,4 +1,4 @@
-package src.com.university.exception;
+package com.university.exception;
 
 public class CreditLimitException extends Exception {
     public CreditLimitException(int current, int attempted, int max) {

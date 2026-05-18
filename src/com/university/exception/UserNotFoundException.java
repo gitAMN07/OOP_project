@@ -1,4 +1,4 @@
-package src.com.university.exception;
+package com.university.exception;
 
 public class UserNotFoundException extends Exception {
     public UserNotFoundException(String login) {

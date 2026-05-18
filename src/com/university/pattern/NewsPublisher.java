@@ -1,11 +1,11 @@
-package src.com.university.pattern;
+package com.university.pattern;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import src.com.university.model.academic.News;
-import src.com.university.model.user.Student;
-import src.com.university.pattern.Database;
+import com.university.model.academic.News;
+import com.university.model.user.Student;
+import com.university.pattern.Database;
 
 public class NewsPublisher {
     private static NewsPublisher instance;

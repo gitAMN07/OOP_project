@@ -1,11 +1,11 @@
-package src.com.university.feature;
+package com.university.feature;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import src.com.university.enums.RiskLevel;
-import src.com.university.model.user.Student;
-import src.com.university.pattern.Database;
+import com.university.enums.RiskLevel;
+import com.university.model.user.Student;
+import com.university.pattern.Database;
 
 public class AcademicRiskDetector {
 

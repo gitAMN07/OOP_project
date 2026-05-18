@@ -1,9 +1,9 @@
-package src.com.university.model.user;
+package com.university.model.user;
 
 import java.util.List;
 
-import src.com.university.enums.Role;
-import src.com.university.pattern.Database;
+import com.university.enums.Role;
+import com.university.pattern.Database;
 
 public class Admin extends Employee {
     public Admin(String login, String password, String firstName, String lastName) {

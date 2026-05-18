@@ -1,12 +1,12 @@
-package src.com.university.model.academic;
+package com.university.model.academic;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.UUID;
 
-import src.com.university.enums.RegistrationStatus;
-import src.com.university.model.user.Manager;
-import src.com.university.model.user.Student;
+import com.university.enums.RegistrationStatus;
+import com.university.model.user.Manager;
+import com.university.model.user.Student;
 
 public class CourseRegistration implements Serializable {
     private final String registrationId;

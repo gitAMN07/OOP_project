@@ -1,4 +1,4 @@
-package src.com.university.exception;
+package com.university.exception;
 
 public class CourseFullException extends Exception {
     public CourseFullException(String courseName) {

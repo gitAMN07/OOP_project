@@ -1,4 +1,4 @@
-package src.com.university.model.research;
+package com.university.model.research;
 
 import java.io.Serializable;
 import java.time.LocalDate;

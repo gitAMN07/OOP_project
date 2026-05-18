@@ -1,13 +1,13 @@
-package src.com.university.model.user;
+package com.university.model.user;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import src.com.university.enums.ManagerType;
-import src.com.university.enums.Role;
-import src.com.university.model.academic.*;
-import src.com.university.pattern.Database;
+import com.university.enums.ManagerType;
+import com.university.enums.Role;
+import com.university.model.academic.*;
+import com.university.pattern.Database;
 
 public class Manager extends Employee {
     private ManagerType managerType;
@@ -58,8 +58,8 @@ public class Manager extends Employee {
         if (students.isEmpty()) { System.out.println("No students in system."); return; }
 
         double avgGpa  = students.stream().mapToDouble(Student::getGpa).average().orElse(0);
-        long critical  = students.stream().filter(s -> s.getRiskLevel() == src.com.university.enums.RiskLevel.CRITICAL).count();
-        long high      = students.stream().filter(s -> s.getRiskLevel() == src.com.university.enums.RiskLevel.HIGH).count();
+        long critical  = students.stream().filter(s -> s.getRiskLevel() == com.university.enums.RiskLevel.CRITICAL).count();
+        long high      = students.stream().filter(s -> s.getRiskLevel() == com.university.enums.RiskLevel.HIGH).count();
         long atRisk    = critical + high;
 
         System.out.println("╔══════════════════════════════════════════╗");
@@ -77,14 +77,14 @@ public class Manager extends Employee {
             .limit(5)
          .forEach(s -> System.out.printf("║  %-20s GPA: %.2f   %-4s║%n",
             s.getFullName(), s.getGpa(),
-            s.getRiskLevel() == src.com.university.enums.RiskLevel.LOW ? "✓" : "⚠"));
+            s.getRiskLevel() == com.university.enums.RiskLevel.LOW ? "✓" : "⚠"));
         System.out.println("╚══════════════════════════════════════════╝");
         }
 
     public void publishNews(String title, String body) {
         News news = new News(title, body, this);
         Database.getInstance().saveNews(news);
-        src.com.university.pattern.NewsPublisher.getInstance().publish(news);
+        com.university.pattern.NewsPublisher.getInstance().publish(news);
         System.out.println("[MANAGER] News published: " + title);
     }
 

@@ -1,11 +1,11 @@
-package src.com.university.model.academic;
+package com.university.model.academic;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import src.com.university.model.user.Student;
+import com.university.model.user.Student;
 
 public class Transcript implements Serializable {
     private Student student;

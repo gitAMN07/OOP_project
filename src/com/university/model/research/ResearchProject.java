@@ -1,4 +1,4 @@
-package src.com.university.model.research;
+package com.university.model.research;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import src.com.university.exception.NonResearcherJoinException;
-import src.com.university.model.user.User;
+import com.university.exception.NonResearcherJoinException;
+import com.university.model.user.User;
 
 public class ResearchProject implements Serializable {
     private final String projectId;

@@ -1,11 +1,11 @@
-package src.com.university.model.user;
+package com.university.model.user;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import src.com.university.enums.Role;
-import src.com.university.enums.TeacherTitle;
-import src.com.university.model.academic.*;
+import com.university.enums.Role;
+import com.university.enums.TeacherTitle;
+import com.university.model.academic.*;
 
 public abstract class Teacher extends Employee {
     private TeacherTitle title;

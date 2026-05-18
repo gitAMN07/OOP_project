@@ -1,11 +1,11 @@
-package src.com.university.model.academic;
+package com.university.model.academic;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import src.com.university.model.user.Employee;
-import src.com.university.model.user.Manager;
+import com.university.model.user.Employee;
+import com.university.model.user.Manager;
 
 public class Message implements Serializable {
     private final String messageId;

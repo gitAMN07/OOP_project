@@ -1,10 +1,10 @@
-package src.com.university.model.academic;
+package com.university.model.academic;
 
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
-import src.com.university.model.user.Student;
+import com.university.model.user.Student;
 
 public class Mark implements Serializable {
     private final String markId;

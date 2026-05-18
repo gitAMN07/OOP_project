@@ -1,2 +1,2 @@
-package src.com.university.enums;
+package com.university.enums;
 public enum LessonType { LECTURE, PRACTICE }

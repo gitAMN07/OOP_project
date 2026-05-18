@@ -1,13 +1,13 @@
-package src.com.university.model.user;
+package com.university.model.user;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import src.com.university.enums.TeacherTitle;
-import src.com.university.model.research.ResearchPaper;
-import src.com.university.model.research.ResearchProject;
-import src.com.university.model.research.Researcher;
+import com.university.enums.TeacherTitle;
+import com.university.model.research.ResearchPaper;
+import com.university.model.research.ResearchProject;
+import com.university.model.research.Researcher;
 
 public class Tutor extends Teacher implements Researcher {
     private int hIndex;

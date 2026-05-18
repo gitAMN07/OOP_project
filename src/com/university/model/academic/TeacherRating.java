@@ -1,11 +1,11 @@
-package src.com.university.model.academic;
+package com.university.model.academic;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.UUID;
 
-import src.com.university.model.user.Student;
-import src.com.university.model.user.Teacher;
+import com.university.model.user.Student;
+import com.university.model.user.Teacher;
 
 public class TeacherRating implements Serializable {
     private final String ratingId;

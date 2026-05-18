@@ -1,10 +1,10 @@
-package src.com.university.model.academic;
+package com.university.model.academic;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import src.com.university.model.user.Manager;
+import com.university.model.user.Manager;
 
 public class News implements Serializable {
     private final String newsId;

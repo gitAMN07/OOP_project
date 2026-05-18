@@ -1,16 +1,16 @@
-package src.com.university.pattern;
+package com.university.pattern;
 
 import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import src.com.university.model.academic.Course;
-import src.com.university.model.academic.CourseRegistration;
-import src.com.university.model.academic.News;
-import src.com.university.model.research.ResearchPaper;
-import src.com.university.model.research.Researcher;
-import src.com.university.model.user.Student;
-import src.com.university.model.user.User;
+import com.university.model.academic.Course;
+import com.university.model.academic.CourseRegistration;
+import com.university.model.academic.News;
+import com.university.model.research.ResearchPaper;
+import com.university.model.research.Researcher;
+import com.university.model.user.Student;
+import com.university.model.user.User;
 
 public class Database {
     private static Database instance;
@@ -59,7 +59,7 @@ public class Database {
     public List<CourseRegistration> getAllRegistrations() { return registrations; }
     public List<CourseRegistration> getPendingRegistrations() {
         return registrations.stream()
-                .filter(r -> r.getStatus() == src.com.university.enums.RegistrationStatus.PENDING)
+                .filter(r -> r.getStatus() == com.university.enums.RegistrationStatus.PENDING)
                 .collect(Collectors.toList());
     }
 

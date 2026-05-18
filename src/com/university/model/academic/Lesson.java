@@ -1,10 +1,10 @@
-package src.com.university.model.academic;
+package com.university.model.academic;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.UUID;
 
-import src.com.university.enums.LessonType;
+import com.university.enums.LessonType;
 
 public class Lesson implements Serializable {
     private final String lessonId;

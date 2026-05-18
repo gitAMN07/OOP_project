@@ -1,12 +1,12 @@
-package src.com.university.pattern;
+package com.university.pattern;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import src.com.university.exception.UserNotFoundException;
-import src.com.university.model.user.User;
+import com.university.exception.UserNotFoundException;
+import com.university.model.user.User;
 
 public class AuthService {
     private static UserSession currentSession = null;
@@ -46,30 +46,4 @@ public class AuthService {
 
     public static boolean isAuthenticated() { return currentSession != null; }
     public static UserSession getSession()  { return currentSession; }
-}
-
-class UserSession {
-    private User user;
-    private LocalDateTime loginTime;
-    private List<String> actionLog;
-
-    public UserSession(User user) {
-        this.user = user;
-        this.loginTime = LocalDateTime.now();
-        this.actionLog = new ArrayList<>();
-    }
-
-    public void logAction(String action) {
-        String entry = "[" + LocalDateTime.now() + "] " + action;
-        actionLog.add(entry);
-        Database.getInstance().addLog(user.getLogin() + " → " + action);
-    }
-
-    public User getUser()             { return user; }
-    public LocalDateTime getLoginTime(){ return loginTime; }
-    public List<String> getLog()      { return actionLog; }
-
-    public long getDurationSeconds() {
-        return java.time.Duration.between(loginTime, LocalDateTime.now()).getSeconds();
-    }
 }

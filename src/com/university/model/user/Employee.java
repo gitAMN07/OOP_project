@@ -1,10 +1,10 @@
-package src.com.university.model.user;
+package com.university.model.user;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import src.com.university.enums.Role;
-import src.com.university.model.academic.Message;
+import com.university.enums.Role;
+import com.university.model.academic.Message;
 
 public abstract class Employee extends User {
     private String firstName;
